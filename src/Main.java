@@ -7,7 +7,7 @@ public class Main {
         myBST.insert(3);
         myBST.insert(2);
         myBST.insert(1);
-
+        System.out.println("Size: " + myBST.size());
         myBST.inOrder();
 
         myBST.delete(2);
