@@ -1,7 +1,7 @@
 import java.util.Iterator;
 import java.util.Stack;
 
-public class MyBST<T extends Comparable<T>> {
+public class MyBST<T extends Comparable<T>> implements Iterable<T>{
     private MyNode<T>  root;
     private int size;
 
@@ -87,24 +87,28 @@ public class MyBST<T extends Comparable<T>> {
 
     private class InOrderIterator implements Iterator<T> {
         private Stack<MyNode<T>> stack = new Stack<>();
+
         public InOrderIterator() {
             pushLeft(root);
         }
+
         private void pushLeft(MyNode<T> node) {
             while (node != null) {
                 stack.push(node);
                 node = node.left;
             }
         }
+
         @Override
         public boolean hasNext() {
             return !stack.isEmpty();
         }
+
         @Override
         public T next() {
-            MyNode<T> node = stack.pop();
-            pushLeft(node.right);
-            return node.value;
+            MyNode<T> current = stack.pop();
+            pushLeft(current.right);
+            return current.value;
         }
     }
 }
