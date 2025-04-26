@@ -1,8 +1,13 @@
+import java.util.Iterator;
+import java.util.Stack;
+
 public class MyBST<T extends Comparable<T>> {
     private MyNode<T>  root;
+    private int size;
 
     public MyBST() {
         root = null;
+        size = 0;
     }
 
     public void insert(T data) {
@@ -38,6 +43,7 @@ public class MyBST<T extends Comparable<T>> {
     public void delete(T data) {
         root = delete(root, data);
     }
+
     private MyNode<T> delete(MyNode<T> currentNode, T data) {
         if (currentNode == null) {
             return null;
@@ -62,6 +68,9 @@ public class MyBST<T extends Comparable<T>> {
         }
         return currentNode;
     }
+
+    public int size() { return size; }
+
     private T minValue(MyNode<T> currentNode) {
         T min = currentNode.value;
         while (currentNode.left != null) {
@@ -69,5 +78,33 @@ public class MyBST<T extends Comparable<T>> {
             currentNode = currentNode.left;
         }
         return min;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new InOrderIterator();
+    }
+
+    private class InOrderIterator implements Iterator<T> {
+        private Stack<MyNode<T>> stack = new Stack<>();
+        public InOrderIterator() {
+            pushLeft(root);
+        }
+        private void pushLeft(MyNode<T> node) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
+        @Override
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+        @Override
+        public T next() {
+            MyNode<T> node = stack.pop();
+            pushLeft(node.right);
+            return node.value;
+        }
     }
 }
