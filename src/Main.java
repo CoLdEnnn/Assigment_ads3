@@ -26,5 +26,6 @@ public class Main {
             Student value = new Student("Student" + i, random.nextInt(20) + 18);
             table.put(key, value);
         }
+        table.printBucketSizes();
     }
 }
